@@ -12,4 +12,6 @@ import java.math.BigInteger;
 public interface UserMapper {
     public User queryUserById(BigInteger id);
 
+    public int banUser(BigInteger id);
+
 }

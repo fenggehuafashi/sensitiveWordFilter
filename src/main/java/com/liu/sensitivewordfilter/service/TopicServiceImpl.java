@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TopicServiceImpl implements TopicService {
@@ -16,7 +17,7 @@ public class TopicServiceImpl implements TopicService {
     TopicMapper topicMapper;
 
     @Override
-    public List<Topic> queryAllTopic() {
+    public List<Map<String,Object>> queryAllTopic() {
 
         return topicMapper.queryAllTopic();
     }

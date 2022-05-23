@@ -9,4 +9,10 @@
         from community.user
         where id = #{id};
     </select>
+
+    <update id="banUser" parameterType="java.math.BigInteger">
+        update community.user
+        set perms=''
+        where id = #{id};
+    </update>
 </mapper>

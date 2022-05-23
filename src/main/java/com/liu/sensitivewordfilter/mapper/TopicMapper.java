@@ -6,11 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
 public interface TopicMapper {
-    public List<Topic> queryAllTopic();
+    public List<Map<String, Object>> queryAllTopic();
 
     public String queryTopicNameById(BigInteger topicId);
 }

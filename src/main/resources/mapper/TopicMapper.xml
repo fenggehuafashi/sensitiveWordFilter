@@ -4,9 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.liu.sensitivewordfilter.mapper.TopicMapper">
-    <select id="queryAllTopic" resultType="Topic">
-        select *
-        from community.topic;
+
+    <select id="queryAllTopic"  resultType="java.util.Map">
+        select t.topic_name, t.create_date,  u.name
+        from topic t
+                 JOIN user u on t.creater_id = u.id
     </select>
 
     <select id="queryTopicNameById" parameterType="java.math.BigInteger" resultType="String">

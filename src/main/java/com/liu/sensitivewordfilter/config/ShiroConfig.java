@@ -1,0 +1,66 @@
+package com.liu.sensitivewordfilter.config;
+
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+@Configuration
+public class ShiroConfig {
+
+    //ShiroFilterFactoryBean
+    @Bean
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultSecurityManager defaultSecurityManager) {
+        ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+        //设置安全管理器
+        bean.setSecurityManager(defaultSecurityManager);
+
+        //添加shiro内置过滤器
+        /*
+         *  anon: 无需认证就可访问
+         *  authc: 必须认证才能访问
+         *  user: 必须拥有记住我功能才能访问
+         *  role: 拥有某个角色权限才能访问
+         * */
+        //拦截
+        Map<String, String> filterMap = new LinkedHashMap<>();
+        //权限设置
+        filterMap.put("/showComment/*", "perms[user:allow]");
+        bean.setFilterChainDefinitionMap(filterMap);
+
+        //设置登录页面
+        bean.setLoginUrl("/toLogin");
+        //未授权提示页面
+        bean.setUnauthorizedUrl("/noauth");
+        return bean;
+    }
+
+
+    //DefaultWebSecurityManager
+    @Bean(name = "securityManager")
+    public DefaultSecurityManager getDefaultSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
+        DefaultWebSecurityManager SecurityManager = new DefaultWebSecurityManager();
+        //关联UserRealm
+        SecurityManager.setRealm(userRealm);
+        return SecurityManager;
+    }
+
+    //创建Realm 对象,需要自定义.
+    @Bean(name = "userRealm")
+    public UserRealm userRealm() {
+        return new UserRealm();
+    }
+
+    //整合ShiroDialect,shiro and Thymeleaf
+    @Bean
+    public ShiroDialect getShiroDialect() {
+        return new ShiroDialect();
+    }
+
+}

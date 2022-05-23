@@ -13,6 +13,6 @@ public class User {
     private BigInteger id;
     private String name;
     private String pwd;
-    private Integer level;
+    private String perms;
     private Integer violation;
 }

@@ -8,16 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class CommentController {
-    @Autowired
+    @Resource
     CommentService commentService;
 
-    @Autowired
+    @Resource
     TopicService topicService;
 
     //进入相应话题的评论页面

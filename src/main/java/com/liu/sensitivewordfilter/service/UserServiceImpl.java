@@ -17,4 +17,9 @@ public class UserServiceImpl implements UserService {
     public User queryUserById(BigInteger id) {
         return userMapper.queryUserById(id);
     }
+
+    @Override
+    public int banUser(BigInteger id) {
+        return userMapper.banUser(id);
+    }
 }
