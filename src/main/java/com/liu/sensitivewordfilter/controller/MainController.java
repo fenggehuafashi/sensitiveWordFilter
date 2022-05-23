@@ -2,8 +2,11 @@ package com.liu.sensitivewordfilter.controller;
 
 
 import com.hengyi.dzfilter.utils.TextUtils;
+import com.liu.sensitivewordfilter.mapper.TopicMapper;
 import com.liu.sensitivewordfilter.mapper.UserMapper;
+import com.liu.sensitivewordfilter.pojo.Topic;
 import com.liu.sensitivewordfilter.pojo.User;
+import com.liu.sensitivewordfilter.service.TopicService;
 import com.liu.sensitivewordfilter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,12 +19,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.jws.WebParam;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class MainController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    TopicService topicService;
 
     //过滤消息
     @RequestMapping(value = "/filter/{content}", produces = "text/html;charset=utf-8")
@@ -41,6 +50,10 @@ public class MainController {
 
         return "index";
     }
+
+
+
+
 
 
 }

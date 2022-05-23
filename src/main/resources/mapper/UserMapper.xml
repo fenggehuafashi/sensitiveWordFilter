@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.liu.sensitivewordfilter.mapper.UserMapper">
-    <select id="queryUserById" parameterType="BigInteger" resultType="User">
+    <select id="queryUserById" parameterType="java.math.BigInteger" resultType="User">
         select *
         from community.user
         where id = #{id};

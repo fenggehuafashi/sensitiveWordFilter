@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p th:text="${topicName}"></p>
+<br>
+<tr th:each="comment:${comments}">
+    <td th:text="${comment.topic_id}"></td>
+    <td th:text="${comment.content}"></td>
+    <td th:text="${comment.name}"></td>
+    <td th:text="${comment.date}"></td>
+    <!--    <td th:text="${#dates.format(comment.date,'yyyy-MM-dd HH:mm')}"></td>-->
+</tr>
+
+</body>
+</html>

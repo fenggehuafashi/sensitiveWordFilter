@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<p th:text="${msg}"></p>
+
+<tr th:each="topic:${topics}">
+    <td th:text="${topic.getTopic_id()}"></td>
+    <td th:text="${topic.getTopic_name()}"></td>
+    <td th:text="${topic.getCreater_id()}"></td>
+    <td th:text="${#dates.format(topic.getCreate_date,'yyyy-MM-dd HH:mm')}"></td>
+</tr>
+
 
 </body>
 </html>

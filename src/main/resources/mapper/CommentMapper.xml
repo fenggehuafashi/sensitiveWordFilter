@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.liu.sensitivewordfilter.mapper.CommentMapper">
+
+    <!--
+    查询对应话题的评论，并关联user表,查询出所有的品论对应的用户。
+    -->
+    <select id="queryCommentsByTopic" parameterType="java.math.BigInteger" resultType="java.util.Map">
+        select c.topic_id, c.content, c.date, u.name
+        from comment c
+                 JOIN user u on c.user_id = u.id
+        where c.topic_id = #{TopicId};
+    </select>
+
+
+    <select id="countCommentByTopic" parameterType="java.math.BigInteger" resultType="BigInteger">
+        select count(*)
+        from community.comment
+        where topic_id = {#TopicId};
+    </select>
+
+    <insert id="insertComment" parameterType="Comment">
+        insert into community.comment(user_id, topic_id, content, date)
+        values (#{user_id}, #{topic_id}, #{content}, NOW());
+    </insert>
+</mapper>

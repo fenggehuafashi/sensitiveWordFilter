@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.liu.sensitivewordfilter.mapper.TopicMapper">
+    <select id="queryAllTopic" resultType="Topic">
+        select *
+        from community.topic;
+    </select>
+
+    <select id="queryTopicNameById" parameterType="java.math.BigInteger" resultType="String">
+        select topic_name
+        from community.topic
+        where topic_id = #{topicId};
+    </select>
+
+</mapper>
