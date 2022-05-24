@@ -85,7 +85,10 @@
                     <div class="mb-1 text-muted" th:text="'创建者>> '+${topic.name}"></div>
                     <div class="mb-1 text-muted" th:text="${topic.create_date}"></div>
                     <br>
-                    <a th:href="@{'/showComment/'+${topic.topic_id}}" class="stretched-link">更多</a>
+                    <div class="col-md-2">
+                        <a class="btn btn-outline-primary" th:if="${topicStat.odd}" th:href="@{'/showComment/'+${topic.topic_id}}">更多</a>
+                        <a class="btn btn-outline-success" th:if="${topicStat.even}" th:href="@{'/showComment/'+${topic.topic_id}}">更多</a>
+                    </div>
                 </div>
 
                 <div class="col-auto d-none d-lg-block">

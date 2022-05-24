@@ -3,22 +3,71 @@
       xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>评论</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <link href="/css/index.css" rel="stylesheet">
 </head>
 <body>
-
-<p th:text="${topicName}"></p>
-<br>
-<tr th:each="comment:${comments}">
-    <td th:text="${comment.content}"></td>
-    <td th:text="${comment.name}"></td>
-    <td th:text="${comment.date}"></td>
-</tr>
-
-<div shiro:hasPermission="user:allow">
-    <a class="btn btn-outline-primary" th:href="@{'/toAddComment/'+${topicId}}">添加评论</a>
+<!--顶部标题-->
+<div class="container">
+    <div class="col-11">
+        <p class="fs-1 fw-bold text-center text-dark " th:text="${topicName}"></p>
+    </div>
+    <hr>
 </div>
+<br>
 
+
+<!--评论展示主体-->
+<main class="container">
+    <div class="col-md-10 position-absolute top-0 start-50 translate-middle">
+
+        <div class="vr">
+            <tr th:each="comment:${comments}">
+                <td th:text="${comment.content}"></td>
+                <td th:text="${comment.name}"></td>
+                <td th:text="${comment.date}"></td>
+            </tr>
+        </div>
+
+    </div>
+
+
+    <!--添加评论按钮-->
+    <div class="col-md-4 position-absolute top-0 start-50 translate-middle">
+        <div shiro:hasPermission="user:allow">
+            <a class="btn btn-outline-primary" th:href="@{'/toAddComment/'+${topicId}}">添加评论</a>
+        </div>
+    </div>
+</main>
+
+<!--页脚-->
+<footer class="blog-footer">
+    <p>Blog built by LiuZhiqiang with <a href="https://getbootstrap.com/">Bootstrap5</a>.
+    </p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
 
 </body>
 </html>
