@@ -31,7 +31,14 @@ public class ShiroConfig {
         //拦截
         Map<String, String> filterMap = new LinkedHashMap<>();
         //权限设置
+        //静态资源放行
+        filterMap.put("/img/**","anon");
+        filterMap.put("/css/**","anon");
+        filterMap.put("/js/**","anon");
+
+        //进入评论页面需要用户权限，被ban的用户无法访问。
         filterMap.put("/showComment/*", "perms[user:allow]");
+//        filterMap.put("/*", "authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
         //设置登录页面

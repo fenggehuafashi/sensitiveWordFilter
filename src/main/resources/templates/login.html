@@ -1,20 +1,63 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Signin</title>
 
-<h1>登录</h1>
-<hr/>
-<p th:text="${msg}" style="color:red;"></p>
+    <!-- Bootstrap core CSS -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
-<form th:action="@{/login}">
-    <p>用户名： <input type="text" name="username"/></p>
-    <p>密  码： <input type="text" name="password"/></p>
-    <p><input type="submit"/></p>
-</form>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-</body>
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form th:action="@{/login}">
+    <img class="mb-4" th:src="@{/img/bootstrap-logo.svg}" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">请登录</h1>
+
+    <h1 class="h3" style="color:red;" th:text="${msg}"></h1>
+
+    <div class="form-floating">
+      <input class="form-control" id="floatingInput" placeholder="账号" name="username">
+      <label for="floatingInput">账号</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="密码" name="password">
+      <label for="floatingPassword">密码</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> 记住我
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">登录</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+  </form>
+</main>
+
+
+    
+  </body>
 </html>
