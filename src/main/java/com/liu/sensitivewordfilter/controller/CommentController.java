@@ -54,15 +54,24 @@ public class CommentController {
     //添加评论页面
     @PostMapping("/addComment")
     public String addComment(@RequestParam Map<String, Object> params, Model model) {
-        Subject currentUser = SecurityUtils.getSubject();
+        //检查Comment长度
+        String content = params.get("content").toString();
+        if (!commentService.checkCommentLength(content)) {
+            //添加失败
+            model.addAttribute("msg", "false");
+            return "/comment/addComment";
+        }
+
         Comment comment = new Comment();
+        //获取当前用户对象
+        Subject currentUser = SecurityUtils.getSubject();
         User user = (User) currentUser.getPrincipal();
         BigInteger userId = user.getId();
 
         //封装Comment
         comment.setUser_id(userId);
         comment.setTopic_id(new BigInteger(params.get("topic_id").toString()));
-        comment.setContent(params.get("content").toString());
+        comment.setContent(content);
 
         //插入Comment
         if (0 != commentService.insertComment(comment)) {

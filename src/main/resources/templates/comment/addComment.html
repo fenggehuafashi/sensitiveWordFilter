@@ -28,23 +28,45 @@
     <link href="/css/index.css" rel="stylesheet">
 </head>
 <body>
-<p th:if="${msg} eq 'false'">
-    评论提交失败
-</p>
-<form th:action="@{/addComment}" method="post">
-    <h1 th:text="${topicName}"></h1>
-    <br>
 
-    <div class="form-group">
-        <label>评论内容</label>
-        <input type="text" name="content" class="form-control" placeholder="请文明发言">
+<main class="container">
+    <div class="col-md-12">
+        <h1 class="h5" class="text-center" style="color:red;" th:if="${msg} eq 'false'">
+            提交失败,评论限制1000字!!!
+        </h1>
     </div>
 
-    <input type="hidden" name="topic_id" th:value="${topicId}">
-    <input type="hidden" name="topic_id" th:value="${session.userName}">
+    <form th:action="@{/addComment}" method="post">
+        <h1 class="fs-1 fw-bold " th:text="${topicName}"></h1>
+        <br>
 
-    <button type="submit" class="btn btn-primary">提交评论</button>
-</form>
+        <!--输入评论内容-->
+        <label class="fs-3">评论内容: </label>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="请文明发言" id="floatingTextarea" name="content"
+                      style="height: 100px"></textarea>
+            <label for="floatingTextarea">请文明发言</label>
+        </div>
+
+        <input type="hidden" name="topic_id" th:value="${topicId}">
+        <input type="hidden" name="topic_id" th:value="${session.userName}">
+        <br>
+        <button type="submit" class="btn btn-primary">提交评论</button>
+    </form>
+
+
+</main>
+
+
+<!--页脚-->
+<footer class="blog-footer">
+    <p>Blog built by LiuZhiqiang with <a href="https://getbootstrap.com/">Bootstrap5</a>.
+    </p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
+
 
 </body>
 </html>

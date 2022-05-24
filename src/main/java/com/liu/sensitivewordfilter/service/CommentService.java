@@ -12,4 +12,6 @@ public interface CommentService {
     public BigInteger countComment(BigInteger TopicId);
 
     public int insertComment(Comment comment);
+
+    public boolean checkCommentLength(String s);
 }

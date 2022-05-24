@@ -14,6 +14,8 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
 
+    static Integer CommentLengthLimit = 1000;
+
     @Override
     public List<Map<String, Object>> queryCommentsByTopic(BigInteger TopicId) {
         return commentMapper.queryCommentsByTopic(TopicId);
@@ -27,5 +29,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int insertComment(Comment comment) {
         return commentMapper.insertComment(comment);
+    }
+
+    @Override
+    public boolean checkCommentLength(String s) {
+        return s.length() <= CommentLengthLimit;
     }
 }
