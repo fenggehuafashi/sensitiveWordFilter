@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -40,8 +41,12 @@ public class MainController {
 
     //登录处理
     @RequestMapping("/login")
-    public String login(String username, String password, Model model) {
-        System.out.println("hello");
+    public String login(String username, String password, Model model, HttpSession session) {
+        if (password == null || username == null) {
+            model.addAttribute("msg", "用户名或密码错误！");
+            return "login";
+        }
+
         //获取当前用户
         Subject subject = SecurityUtils.getSubject();
         //封装用户登录数据
@@ -51,7 +56,7 @@ public class MainController {
             //执行登录方法
             subject.login(token);
             System.out.println(username + ">>登陆成功，查询所有topic,返回前端展示。");
-            model.addAttribute("userName", username);
+            session.setAttribute("userName", username);
             model.addAttribute("topics", topicService.queryAllTopic());
             return "index";
         } catch (UnknownAccountException e) {
@@ -70,10 +75,10 @@ public class MainController {
 
     //注销处理
     @RequestMapping("/logout")
-    public String logout() {
+    public String logout(HttpSession session) {
+        session.removeAttribute("userName");
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
-
         return "index";
     }
 

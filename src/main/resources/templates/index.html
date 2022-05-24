@@ -52,7 +52,7 @@
                     <a class="btn btn-sm btn-outline-secondary" th:href="@{/toLogin}">登录</a>
                 </div>
                 <div shiro:Authenticated>
-                    <strong class="link-secondary" th:text="${userName}"></strong>
+                    <strong class="link-secondary" th:text="${session.userName}"></strong>
                     &nbsp;
                     <a class="btn btn-sm btn-outline-secondary" th:href="@{/logout}">注销</a>
                 </div>

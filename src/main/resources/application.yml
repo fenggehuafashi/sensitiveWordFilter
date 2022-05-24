@@ -42,3 +42,9 @@ mybatis:
   type-aliases-package: com/liu/sensitivewordfilter/pojo
   mapper-locations: classpath:mapper/*.xml
 
+# 服务器设置
+server:
+  port: 8080
+#  session有效时间7200s
+  session:
+    timeout: 7200

@@ -47,7 +47,7 @@ public class ShiroConfig {
         filterMap.put("/js/**", "anon");
 
         //进入评论页面需要用户权限，被ban的用户无法访问。
-        filterMap.put("/showComment/*", "perms[user:allow]");
+        filterMap.put("/addComment/*", "perms[user:allow]");
         //其他页面拦截。
         filterMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterMap);
@@ -55,7 +55,6 @@ public class ShiroConfig {
         //设置登录页面
         bean.setLoginUrl("/toLogin");
         //未授权提示页面
-
         bean.setUnauthorizedUrl("/index");
         return bean;
     }
