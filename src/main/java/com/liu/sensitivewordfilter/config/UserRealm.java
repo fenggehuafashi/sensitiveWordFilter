@@ -29,10 +29,9 @@ public class UserRealm extends AuthorizingRealm {
         //用户名为账号id 必须为数字
         try {
             new BigInteger(userToken.getUsername());
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             //用户名错误
             return null;
-
         }
 
         //连接数据库 查询用户
@@ -44,12 +43,9 @@ public class UserRealm extends AuthorizingRealm {
             return null;
         }
 
-
         //密码认证 shiro来做
         //可以加密 md5 md5+salt
         return new SimpleAuthenticationInfo(user, user.getPwd(), "");
-
-
     }
 
 

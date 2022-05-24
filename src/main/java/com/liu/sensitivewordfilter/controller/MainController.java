@@ -1,32 +1,22 @@
 package com.liu.sensitivewordfilter.controller;
 
 
-import com.hengyi.dzfilter.utils.TextUtils;
-import com.liu.sensitivewordfilter.mapper.TopicMapper;
-import com.liu.sensitivewordfilter.mapper.UserMapper;
-import com.liu.sensitivewordfilter.pojo.Topic;
-import com.liu.sensitivewordfilter.pojo.User;
 import com.liu.sensitivewordfilter.service.TopicService;
-import com.liu.sensitivewordfilter.service.UserService;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import javax.annotation.Resource;
-import javax.jws.WebParam;
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.util.Collection;
-import java.util.List;
+
 
 @Controller
 public class MainController {
@@ -34,6 +24,7 @@ public class MainController {
     @Resource
     TopicService topicService;
 
+    //主页
     @RequestMapping({"/", "/index", "index.html"})
     public String toIndex(Model model) {
         model.addAttribute("msg", "welcome!!!");
@@ -41,11 +32,13 @@ public class MainController {
         return "index";
     }
 
+    //前往登录页面
     @RequestMapping("/toLogin")
     public String toLogin() {
         return "login";
     }
 
+    //登录处理
     @RequestMapping("/login")
     public String login(String username, String password, Model model) {
         //获取当前用户
@@ -70,6 +63,8 @@ public class MainController {
         }
     }
 
+
+    //注销处理
     @RequestMapping("/logout")
     public String logout() {
         Subject currentUser = SecurityUtils.getSubject();

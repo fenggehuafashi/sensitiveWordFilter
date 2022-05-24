@@ -11,7 +11,7 @@
 <br>
 
 
-<div shiro:hasPermission="user:allow" th:each="topic:${topics}">
+<div th:each="topic:${topics}">
     <tr>
         <td th:text="${topic.topic_name}"></td>
         <td th:text="${topic.name}"></td>
@@ -26,7 +26,6 @@
 <div shiro:Authenticated>
     <a th:href="@{/logout}">注销</a>
 </div>
-
 
 
 </body>

@@ -1,9 +1,13 @@
 package com.liu.sensitivewordfilter.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,20 +35,26 @@ public class ShiroConfig {
         //拦截
         Map<String, String> filterMap = new LinkedHashMap<>();
         //权限设置
+        //根目录不拦截
+        filterMap.put("/", "anon");
+        filterMap.put("/index", "anon");
+        filterMap.put("/index.html", "anon");
         //静态资源放行
-        filterMap.put("/img/**","anon");
-        filterMap.put("/css/**","anon");
-        filterMap.put("/js/**","anon");
+        filterMap.put("/img/**", "anon");
+        filterMap.put("/css/**", "anon");
+        filterMap.put("/js/**", "anon");
 
         //进入评论页面需要用户权限，被ban的用户无法访问。
         filterMap.put("/showComment/*", "perms[user:allow]");
-//        filterMap.put("/*", "authc");
+        //其他页面拦截。
+        filterMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
         //设置登录页面
         bean.setLoginUrl("/toLogin");
         //未授权提示页面
-        bean.setUnauthorizedUrl("/noauth");
+
+//        bean.setUnauthorizedUrl("/noauth");
         return bean;
     }
 
@@ -55,6 +65,7 @@ public class ShiroConfig {
         DefaultWebSecurityManager SecurityManager = new DefaultWebSecurityManager();
         //关联UserRealm
         SecurityManager.setRealm(userRealm);
+
         return SecurityManager;
     }
 
