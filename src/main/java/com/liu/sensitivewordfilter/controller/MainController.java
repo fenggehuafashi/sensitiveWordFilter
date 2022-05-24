@@ -41,6 +41,7 @@ public class MainController {
     //登录处理
     @RequestMapping("/login")
     public String login(String username, String password, Model model) {
+        System.out.println("hello");
         //获取当前用户
         Subject subject = SecurityUtils.getSubject();
         //封装用户登录数据
@@ -50,14 +51,17 @@ public class MainController {
             //执行登录方法
             subject.login(token);
             System.out.println(username + ">>登陆成功，查询所有topic,返回前端展示。");
+            model.addAttribute("userName", username);
             model.addAttribute("topics", topicService.queryAllTopic());
             return "index";
         } catch (UnknownAccountException e) {
             //用户名不存在
+            System.out.println("登陆失败");
             model.addAttribute("msg", "用户名或密码错误！");
             return "login";
         } catch (IncorrectCredentialsException e) {
             //密码错误
+            System.out.println("登陆失败");
             model.addAttribute("msg", "用户名或密码错误！");
             return "login";
         }

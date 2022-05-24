@@ -31,6 +31,7 @@ public class UserRealm extends AuthorizingRealm {
             new BigInteger(userToken.getUsername());
         } catch (NumberFormatException e) {
             //用户名错误
+            System.out.println("登陆失败");
             return null;
         }
 

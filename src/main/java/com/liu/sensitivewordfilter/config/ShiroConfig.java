@@ -39,6 +39,8 @@ public class ShiroConfig {
         filterMap.put("/", "anon");
         filterMap.put("/index", "anon");
         filterMap.put("/index.html", "anon");
+        filterMap.put("/toLogin", "anon");
+        filterMap.put("/login", "anon");
         //静态资源放行
         filterMap.put("/img/**", "anon");
         filterMap.put("/css/**", "anon");
@@ -54,7 +56,7 @@ public class ShiroConfig {
         bean.setLoginUrl("/toLogin");
         //未授权提示页面
 
-//        bean.setUnauthorizedUrl("/noauth");
+        bean.setUnauthorizedUrl("/index");
         return bean;
     }
 

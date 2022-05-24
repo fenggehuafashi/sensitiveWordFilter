@@ -21,7 +21,7 @@ public class CommentController {
     @Resource
     TopicService topicService;
 
-    //进入相应话题的评论页面
+    //根据topic_id查询评论页面
     @RequestMapping("/showComment/{topicId}")
     public String showComment(@PathVariable("topicId") BigInteger topicId, Model model) {
         List<Map<String, Object>> comments = commentService.queryCommentsByTopic(topicId);
