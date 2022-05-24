@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,12 +10,15 @@
 <p th:text="${topicName}"></p>
 <br>
 <tr th:each="comment:${comments}">
-    <td th:text="${comment.topic_id}"></td>
     <td th:text="${comment.content}"></td>
     <td th:text="${comment.name}"></td>
     <td th:text="${comment.date}"></td>
-    <!--    <td th:text="${#dates.format(comment.date,'yyyy-MM-dd HH:mm')}"></td>-->
 </tr>
+
+<div shiro:hasPermission="user:allow">
+    <a class="btn btn-outline-primary" th:href="@{'/toAddComment/'+${topicId}}">添加评论</a>
+</div>
+
 
 </body>
 </html>
