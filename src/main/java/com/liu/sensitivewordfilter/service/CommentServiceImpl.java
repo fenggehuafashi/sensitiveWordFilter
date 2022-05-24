@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public String FilterSensiveWord(String content) {
-        String filterResult = TextUtils.filter(content);
+        content = TextUtils.filter(content);
 
         double star = 0.0;
         double length = content.length();
