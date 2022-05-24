@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.math.BigInteger;
@@ -53,13 +54,15 @@ public class CommentController {
 
     //添加评论页面
     @PostMapping("/addComment")
-    public String addComment(@RequestParam Map<String, Object> params, Model model) {
+    public String addComment(@RequestParam Map<String, Object> params, RedirectAttributes attribdatautes) {
         //检查Comment长度
         String content = params.get("content").toString();
         if (!commentService.checkCommentLength(content)) {
             //添加失败
-            model.addAttribute("msg", "false");
-            return "/comment/addComment";
+            System.out.println("添加评论失败");
+            System.out.println("品论内容>>" + content);
+            attribdatautes.addFlashAttribute("msg", "false");
+            return "redirect:/toAddComment/" + params.get("topic_id").toString();
         }
 
         Comment comment = new Comment();
@@ -81,8 +84,8 @@ public class CommentController {
         }
 
         //添加失败
-        model.addAttribute("msg", "false");
-        return "/comment/addComment";
+        attribdatautes.addFlashAttribute("msg", "false");
+        return "redirect:/toAddComment/" + params.get("topic_id").toString();
 
     }
 

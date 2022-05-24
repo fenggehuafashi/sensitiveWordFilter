@@ -31,21 +31,22 @@
 
 <main class="container">
     <div class="col-md-12">
-        <h1 class="h5" class="text-center" style="color:red;" th:if="${msg} eq 'false'">
-            提交失败,评论限制1000字!!!
+        <h1 class="h5 text-center" style="color:red;" th:if="${msg} eq 'false'">
+            请不要恶意提交,评论限制1000字!!!
         </h1>
+
     </div>
 
     <form th:action="@{/addComment}" method="post">
-        <h1 class="fs-1 fw-bold " th:text="${topicName}"></h1>
+        <h1 class="fs-1 fw-bold " th:text="'说说你对'+${topicName}+'的看法吧'"></h1>
         <br>
 
         <!--输入评论内容-->
         <label class="fs-3">评论内容: </label>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="请文明发言" id="floatingTextarea" name="content"
-                      style="height: 100px"></textarea>
-            <label for="floatingTextarea">请文明发言</label>
+            <textarea class="form-control" placeholder="请文明发言,最多1000字。" id="floatingTextarea" name="content"
+                      style="height: 500px"></textarea>
+            <label for="floatingTextarea">请文明发言,最多1000字。</label>
         </div>
 
         <input type="hidden" name="topic_id" th:value="${topicId}">
@@ -56,7 +57,7 @@
 
 
 </main>
-
+<br>
 
 <!--页脚-->
 <footer class="blog-footer">

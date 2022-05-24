@@ -33,6 +33,18 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean checkCommentLength(String s) {
-        return s.length() <= CommentLengthLimit;
+        boolean judge = true;
+        if (s.length() > CommentLengthLimit) {
+            System.out.println("comment over size!");
+            judge = false;
+        }
+        if (s.length() == 0) {
+            System.out.println("comment is empty!");
+            judge = false;
+        }
+
+        System.out.println("content length judge>>" + judge);
+        return judge;
     }
+
 }

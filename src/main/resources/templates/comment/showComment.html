@@ -32,19 +32,27 @@
     <div class="col-11">
         <p class="fs-1 fw-bold text-center text-dark " th:text="${topicName}"></p>
     </div>
-    <hr>
-</div>
-<br>
 
+</div>
+<hr style="border: 3px solid dimgrey;border-radius: 5px;">
+<br>
 <!--评论展示主体-->
 <main class="container">
-    <div class="">
-        <tr th:each="comment:${comments}">
-            <td th:text="${comment.content}"></td>
-            <td th:text="${comment.name}"></td>
-            <td th:text="${comment.date}"></td>
-        </tr>
+    <div th:each="comment,commentStat:${comments}" class="col-md-offset-2">
+        <h4 class="font-monospace fw-bold" th:text="${comment.name}"></h4>
+        <div th:if="${commentStat.odd}" class="col-md-12  bg-secondary text-white rounded-3 border border-2 ">
+            <p class="px-2 py-2 lh-base fs-5 col-md-10 font-monospace" th:text="${comment.content}"></p>
+            <h6 class="px-2 py-2 lh-base font-monospace" th:text="${comment.date}"></h6>
+        </div>
+        <div th:if="${commentStat.even}" class="col-md-12 bg-light text-dark rounded-3 border border-2">
+            <p class="px-2 py-2 lh-base fs-5 col-md-10 font-monospace" th:text="${comment.content}"></p>
+            <h6 class="px-2 py-2  lh-base font-monospace" th:text="${comment.date}"></h6>
+        </div>
+
+        <br>
+
     </div>
+
     <br>
     <!--添加评论按钮-->
     <div class="">
