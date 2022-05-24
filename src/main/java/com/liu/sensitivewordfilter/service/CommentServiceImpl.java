@@ -1,5 +1,6 @@
 package com.liu.sensitivewordfilter.service;
 
+import com.hengyi.dzfilter.utils.TextUtils;
 import com.liu.sensitivewordfilter.mapper.CommentMapper;
 import com.liu.sensitivewordfilter.pojo.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -15,6 +18,7 @@ public class CommentServiceImpl implements CommentService {
     CommentMapper commentMapper;
 
     static Integer CommentLengthLimit = 1000;
+    static Double CommentAbuseJudgeThreshold = 0.1;
 
     @Override
     public List<Map<String, Object>> queryCommentsByTopic(BigInteger TopicId) {
@@ -47,4 +51,26 @@ public class CommentServiceImpl implements CommentService {
         return judge;
     }
 
+    @Override
+    public String FilterSensiveWord(String content) {
+        String filterResult = TextUtils.filter(content);
+
+        double star = 0.0;
+        double length = content.length();
+        // 根据指定的字符构建正则
+        Pattern pattern = Pattern.compile("\\*");
+        // 构建字符串和正则的匹配
+        Matcher matcher = pattern.matcher(content);
+        // 循环依次往下匹配
+        while (matcher.find()) {
+            // 如果匹配,则数量+1
+            star++;
+        }
+
+        if (star / length >= CommentAbuseJudgeThreshold) {
+            return "";
+        }
+
+        return content;
+    }
 }

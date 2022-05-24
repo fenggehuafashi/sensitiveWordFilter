@@ -55,12 +55,17 @@ public class CommentController {
     //添加评论页面
     @PostMapping("/addComment")
     public String addComment(@RequestParam Map<String, Object> params, RedirectAttributes attribdatautes) {
-        //检查Comment长度
         String content = params.get("content").toString();
+        //对评论进行过滤,如果违规次数超过阈值,丢弃评论,提交失败。
+        //过滤后违规词会被‘*’替代
+        System.out.println("before filter>>" + content);
+        content = commentService.FilterSensiveWord(content);
+        System.out.println("after filter>>" + content);
+        //检查Comment长度
+
         if (!commentService.checkCommentLength(content)) {
             //添加失败
             System.out.println("添加评论失败");
-            System.out.println("品论内容>>" + content);
             attribdatautes.addFlashAttribute("msg", "false");
             return "redirect:/toAddComment/" + params.get("topic_id").toString();
         }

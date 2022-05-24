@@ -13,5 +13,7 @@ public interface CommentService {
 
     public int insertComment(Comment comment);
 
+    public String FilterSensiveWord(String content);
+
     public boolean checkCommentLength(String s);
 }
