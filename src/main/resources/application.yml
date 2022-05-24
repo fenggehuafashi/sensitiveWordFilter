@@ -28,7 +28,17 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
-# spring 绑定mybatis
+  # 关闭Thymeleaf缓存
+  thymeleaf:
+    cache=false:
+
+  #设置热更新
+  devtools:
+    livereload:
+      enabled: true
+
+# 绑定mybatis
 mybatis:
   type-aliases-package: com/liu/sensitivewordfilter/pojo
   mapper-locations: classpath:mapper/*.xml
+
