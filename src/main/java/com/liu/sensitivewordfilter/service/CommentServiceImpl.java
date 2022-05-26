@@ -2,6 +2,7 @@ package com.liu.sensitivewordfilter.service;
 
 import com.hengyi.dzfilter.utils.TextUtils;
 import com.liu.sensitivewordfilter.mapper.CommentMapper;
+import com.liu.sensitivewordfilter.mapper.UserMapper;
 import com.liu.sensitivewordfilter.pojo.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ import java.util.regex.Pattern;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
+
+    @Autowired
+    UserService userService;
 
     static Integer CommentLengthLimit = 1000;
     static Double CommentAbuseJudgeThreshold = 0.1;
@@ -51,8 +55,13 @@ public class CommentServiceImpl implements CommentService {
         return judge;
     }
 
+    /**
+     * 敏感词过滤
+     * @param content
+     * @return
+     */
     @Override
-    public String FilterSensiveWord(String content) {
+    public String FilterSensiveWord(String content,BigInteger userID) {
         content = TextUtils.filter(content);
 
         double star = 0.0;
@@ -68,6 +77,7 @@ public class CommentServiceImpl implements CommentService {
         }
 
         if (star / length >= CommentAbuseJudgeThreshold) {
+            userService.addViolationCount(userID);
             return "";
         }
 

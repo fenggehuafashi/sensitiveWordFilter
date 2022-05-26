@@ -4,6 +4,7 @@ import com.liu.sensitivewordfilter.pojo.Comment;
 import com.liu.sensitivewordfilter.pojo.User;
 import com.liu.sensitivewordfilter.service.CommentService;
 import com.liu.sensitivewordfilter.service.TopicService;
+import com.liu.sensitivewordfilter.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,14 @@ public class CommentController {
     @Resource
     TopicService topicService;
 
+    @Resource
+    UserService userService;
+
     //根据topic_id查询评论页面
     @RequestMapping("/showComment/{topicId}")
     public String showComment(@PathVariable("topicId") BigInteger topicId, Model model) {
         List<Map<String, Object>> comments = commentService.queryCommentsByTopic(topicId);
-        System.out.println("get>>" + comments);
+//        System.out.println("get>>" + comments);
         String topicName = topicService.queryTopicNameById(topicId);
         model.addAttribute("topicName", topicName);
         model.addAttribute("topicId", topicId);
@@ -56,13 +60,27 @@ public class CommentController {
     @PostMapping("/addComment")
     public String addComment(@RequestParam Map<String, Object> params, RedirectAttributes attribdatautes) {
         String content = params.get("content").toString();
+
+        //获取当前用户对象
+        Subject currentUser = SecurityUtils.getSubject();
+        User user = (User) currentUser.getPrincipal();
+        BigInteger userId = user.getId();
+
         //对评论进行过滤,如果违规次数超过阈值,丢弃评论,提交失败。
         //过滤后违规词会被‘*’替代
-        System.out.println("before filter>>" + content);
-        content = commentService.FilterSensiveWord(content);
-        System.out.println("after filter>>" + content);
-        //检查Comment长度
+//        System.out.println("before filter>>" + content);
+        content = commentService.FilterSensiveWord(content, userId);
+//        System.out.println("after filter>>" + content);
 
+        //检查是否超过违规次数，如果超过，删除用户权限。
+        if (userService.banUser(userId) == 1) {
+            System.out.println("违规超过上限>>" + userId);
+            //用户踢出
+            return "redirect:/logout";
+        }
+
+
+        //检查Comment长度,如果违规检测没通过，会直接返回空字符串。
         if (!commentService.checkCommentLength(content)) {
             //添加失败
             System.out.println("添加评论失败");
@@ -70,13 +88,8 @@ public class CommentController {
             return "redirect:/toAddComment/" + params.get("topic_id").toString();
         }
 
-        Comment comment = new Comment();
-        //获取当前用户对象
-        Subject currentUser = SecurityUtils.getSubject();
-        User user = (User) currentUser.getPrincipal();
-        BigInteger userId = user.getId();
-
         //封装Comment
+        Comment comment = new Comment();
         comment.setUser_id(userId);
         comment.setTopic_id(new BigInteger(params.get("topic_id").toString()));
         comment.setContent(content);

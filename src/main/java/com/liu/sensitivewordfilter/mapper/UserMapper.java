@@ -14,4 +14,8 @@ public interface UserMapper {
 
     public int banUser(BigInteger id);
 
+    public int addViolationCount(BigInteger id);
+
+    public int queryViolationCount(BigInteger id);
+
 }

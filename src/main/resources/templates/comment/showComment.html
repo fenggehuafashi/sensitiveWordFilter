@@ -55,11 +55,21 @@
 
     <br>
     <!--添加评论按钮-->
-    <div class="">
-        <div shiro:hasPermission="user:allow">
-            <a class="btn btn-outline-primary" th:href="@{'/toAddComment/'+${topicId}}">添加评论</a>
+    <div class="col-md-2">
+        <div shiro:hasPermission="user:allow" class="btn-group">
+            <a class="btn btn-primary" th:href="@{'/toAddComment/'+${topicId}}">添加评论</a>
+            <a class="btn btn-danger" th:href="@{'/index'}">返回首页</a>
         </div>
+
+        <div shiro:hasPermission="user:ban" class="btn-group">
+            <a class="btn btn-primary" role="button" aria-disabled="true">添加评论</a>
+            <a class="btn btn-danger" th:href="@{'/index'}">返回首页</a>
+        </div>
+
     </div>
+
+    <!--添加评论按钮-->
+
 </main>
 
 <br>

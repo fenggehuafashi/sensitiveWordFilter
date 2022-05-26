@@ -12,7 +12,20 @@
 
     <update id="banUser" parameterType="java.math.BigInteger">
         update community.user
-        set perms=''
+        set perms='user:ban'
         where id = #{id};
     </update>
+
+    <update id="addViolationCount" parameterType="java.math.BigInteger">
+        update community.user
+        set violation=violation + 1
+        where id = #{id};
+    </update>
+
+    <select id="queryViolationCount" parameterType="java.math.BigInteger" resultType="int">
+        select violation
+        from community.user
+        where id=#{id}
+    </select>
+
 </mapper>

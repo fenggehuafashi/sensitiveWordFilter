@@ -34,10 +34,9 @@
         <h1 class="h5 text-center" style="color:red;" th:if="${msg} eq 'false'">
             请不要恶意评论,评论限制1000字!!!
         </h1>
-
     </div>
 
-    <form th:action="@{/addComment}" method="post">
+    <form th:action="@{/addComment}" method="post" shiro:hasPermission="user:allow">
         <h1 class="fs-1 fw-bold " th:text="'说说你对'+${topicName}+'的看法吧'"></h1>
         <br>
 
@@ -52,7 +51,11 @@
         <input type="hidden" name="topic_id" th:value="${topicId}">
         <input type="hidden" name="topic_id" th:value="${session.userName}">
         <br>
-        <button type="submit" class="btn btn-primary">提交评论</button>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">提交评论</button>
+            <a class="btn btn-danger" th:href="@{'/showComment/'+${topicId}}">返回话题</a>
+        </div>
     </form>
 
 
