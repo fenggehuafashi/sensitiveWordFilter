@@ -14,14 +14,12 @@ public class TopicController {
     @Resource
     TopicService topicService;
 
-
     //查询所有Topic
     @RequestMapping(value = "/topic", produces = "text/html;charset=utf-8")
     public String queryAllTopic(Model model)  {
         System.out.println("查询所有topic");
-
+        //封装Topic后返回给前端页面展示
         model.addAttribute("topics", topicService.queryAllTopic());
-
         return "index";
     }
 }

@@ -11,9 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
-    private BigInteger comment_id;
-    private BigInteger user_id;
-    private BigInteger topic_id;
-    private String content;
-    private Date date;
+
+    private BigInteger comment_id;//评论id
+    private BigInteger user_id; //用户id
+    private BigInteger topic_id;//话题id
+    private String content;//评论内容
+    private Date date;//评论日期
 }

@@ -53,7 +53,7 @@ public class UserRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("执行了授权");
+
         //SimpleAuthorizationInfo 还有一个类长得很像，注意区分。
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
@@ -63,6 +63,7 @@ public class UserRealm extends AuthorizingRealm {
 
         //设置数据库中读取到的权限
         info.addStringPermission(currentUser.getPerms());
+        System.out.println("执行了授权>>"+currentUser.getPerms());
 //        System.out.println("user:" + currentUser.getName() + "  perms:" + currentUser.getPerms());
         return info;
     }

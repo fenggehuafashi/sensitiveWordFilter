@@ -5,23 +5,20 @@
 
 <mapper namespace="com.liu.sensitivewordfilter.mapper.CommentMapper">
 
-    <!--
-    查询对应话题的评论，并关联user表,查询出所有的品论对应的用户。
-    -->
+    <!--查询对应话题的评论，并关联user表,查询出所有的评论对应的用户。-->
     <select id="queryCommentsByTopic" parameterType="java.math.BigInteger" resultType="java.util.Map">
         select c.topic_id, c.content, c.date, u.name
-        from comment c
-                 JOIN user u on c.user_id = u.id
+        from comment c JOIN user u on c.user_id = u.id
         where c.topic_id = #{TopicId};
     </select>
 
-
+    <!--根据话题id计算相应的评论数量-->
     <select id="countCommentByTopic" parameterType="java.math.BigInteger" resultType="BigInteger">
-        select count(*)
-        from community.comment
-        where topic_id = {#TopicId};
+        select count(*) from community.comment
+        where topic_id = #{TopicId};
     </select>
 
+    <!--添加评论-->
     <insert id="insertComment" parameterType="Comment">
         insert into community.comment(user_id, topic_id, content, date)
         values (#{user_id}, #{topic_id}, #{content}, NOW());

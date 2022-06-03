@@ -31,11 +31,13 @@
 
 <main class="container">
     <div class="col-md-12">
+        <!--违规提示，默认隐藏，当后端判定违规后生效-->
         <h1 class="h5 text-center" style="color:red;" th:if="${msg} eq 'false'">
             请不要恶意评论,评论限制1000字!!!
         </h1>
     </div>
 
+    <!--用户评论提交表单-->
     <form th:action="@{/addComment}" method="post" shiro:hasPermission="user:allow">
         <h1 class="fs-1 fw-bold " th:text="'说说你对'+${topicName}+'的看法吧'"></h1>
         <br>
@@ -43,11 +45,14 @@
         <!--输入评论内容-->
         <label class="fs-3">评论内容: </label>
         <div class="form-floating">
+            <!--评论文本框-->
             <textarea class="form-control" placeholder="请文明发言,最多1000字。" id="floatingTextarea" name="content"
                       style="height: 500px"></textarea>
+            <!--文本框默认提示-->
             <label for="floatingTextarea">请文明发言,最多1000字。</label>
         </div>
 
+        <!--隐藏输入框，用户向后端提交当前话题和用户信息-->
         <input type="hidden" name="topic_id" th:value="${topicId}">
         <input type="hidden" name="topic_id" th:value="${session.userName}">
         <br>

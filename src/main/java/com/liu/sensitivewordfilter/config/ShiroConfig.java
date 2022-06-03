@@ -32,10 +32,9 @@ public class ShiroConfig {
          *  user: 必须拥有记住我功能才能访问
          *  role: 拥有某个角色权限才能访问
          * */
-        //拦截
+        //拦截记录集合，以键值对的形式记录
         Map<String, String> filterMap = new LinkedHashMap<>();
-        //权限设置
-        //根目录不拦截
+        //权限设置,根目录不拦截
         filterMap.put("/", "anon");
         filterMap.put("/index", "anon");
         filterMap.put("/index.html", "anon");
@@ -52,9 +51,9 @@ public class ShiroConfig {
         filterMap.put("/**", "authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
-        //设置登录页面
+        //设置登录页面的Controller URL
         bean.setLoginUrl("/toLogin");
-        //未授权提示页面
+        //未授权提示页面,访问未授权页面时，将会被安全框架拦截后返回首页。
         bean.setUnauthorizedUrl("/index");
         return bean;
     }

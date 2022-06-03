@@ -56,14 +56,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * 敏感词过滤
+     * 敏感词过滤业务代码
      * @param content
      * @return
      */
     @Override
     public String FilterSensiveWord(String content,BigInteger userID) {
+        //调用DFA算法，对评论内容进行过滤，敏感词将被替换为'*'号
         content = TextUtils.filter(content);
-
+        //敏感词和违规词的字符数记录
         double star = 0.0;
         double length = content.length();
         // 根据指定的字符构建正则
@@ -76,11 +77,12 @@ public class CommentServiceImpl implements CommentService {
             star++;
         }
 
+        //如果敏感词或违规词的字符数超过设定的阈值，则判定该条评论违规，用户违规次数+1。
         if (star / length >= CommentAbuseJudgeThreshold) {
             userService.addViolationCount(userID);
             return "";
         }
-
+        //判定不违规可以提交，返回过滤后的内容。
         return content;
     }
 }

@@ -35,9 +35,11 @@ public class CommentController {
     //根据topic_id查询评论页面
     @RequestMapping("/showComment/{topicId}")
     public String showComment(@PathVariable("topicId") BigInteger topicId, Model model) {
+        //根据话题id 查询并封装评论
         List<Map<String, Object>> comments = commentService.queryCommentsByTopic(topicId);
 //        System.out.println("get>>" + comments);
         String topicName = topicService.queryTopicNameById(topicId);
+        //将必要信息返回给前端
         model.addAttribute("topicName", topicName);
         model.addAttribute("topicId", topicId);
         model.addAttribute("comments", comments);
@@ -68,9 +70,9 @@ public class CommentController {
 
         //对评论进行过滤,如果违规次数超过阈值,丢弃评论,提交失败。
         //过滤后违规词会被‘*’替代
-//        System.out.println("before filter>>" + content);
+        System.out.println("before filter>>" + content);
         content = commentService.FilterSensiveWord(content, userId);
-//        System.out.println("after filter>>" + content);
+        System.out.println("after filter>>" + content);
 
         //检查是否超过违规次数，如果超过，删除用户权限。
         if (userService.banUser(userId) == 1) {
@@ -79,10 +81,9 @@ public class CommentController {
             return "redirect:/logout";
         }
 
-
         //检查Comment长度,如果违规检测没通过，会直接返回空字符串。
         if (!commentService.checkCommentLength(content)) {
-            //添加失败
+            //添加失败,向前端返回提示信息。
             System.out.println("添加评论失败");
             attribdatautes.addFlashAttribute("msg", "false");
             return "redirect:/toAddComment/" + params.get("topic_id").toString();
@@ -94,14 +95,14 @@ public class CommentController {
         comment.setTopic_id(new BigInteger(params.get("topic_id").toString()));
         comment.setContent(content);
 
-        //插入Comment
+        //插入Comment并调用评论业务类，对数据库插入新的评论。
         if (0 != commentService.insertComment(comment)) {
             //添加成功
             System.out.println("成功添加评论");
             return "redirect:/showComment/" + params.get("topic_id").toString();
         }
 
-        //添加失败
+        //添加失败，重定向到添加评论页面
         attribdatautes.addFlashAttribute("msg", "false");
         return "redirect:/toAddComment/" + params.get("topic_id").toString();
 

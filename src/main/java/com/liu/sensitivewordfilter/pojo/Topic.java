@@ -12,8 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Topic {
-    private BigInteger topic_id;
-    private String topic_name;
-    private BigInteger creater_id;
-    private Date create_date;
+    private BigInteger topic_id;//话题id
+    private String topic_name;//话题名字
+    private BigInteger creater_id;//创建者id
+    private Date create_date;//创建日期
 }

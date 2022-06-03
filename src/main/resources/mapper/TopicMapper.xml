@@ -5,12 +5,14 @@
 
 <mapper namespace="com.liu.sensitivewordfilter.mapper.TopicMapper">
 
+    <!--通过用户id和话题创建者id，建立user表和话题表等值连接，查询所有话题和相应的建立者信息-->
     <select id="queryAllTopic"  resultType="java.util.Map">
         select t.topic_id,t.topic_name, t.create_date,  u.name
         from topic t
                  JOIN user u on t.creater_id = u.id
     </select>
 
+    <!--通过问题id查询话题名字-->
     <select id="queryTopicNameById" parameterType="java.math.BigInteger" resultType="String">
         select topic_name
         from community.topic
