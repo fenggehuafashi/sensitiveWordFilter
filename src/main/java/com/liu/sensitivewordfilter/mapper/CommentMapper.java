@@ -16,4 +16,6 @@ public interface CommentMapper {
     public BigInteger countComment(BigInteger TopicId);
 
     public int insertComment(Comment comment);
+
+    public int deleteComment(BigInteger commentId);
 }

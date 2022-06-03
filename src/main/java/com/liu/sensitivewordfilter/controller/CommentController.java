@@ -109,4 +109,11 @@ public class CommentController {
     }
 
 
+    @RequestMapping("/deleteComment/{topicId}/{commentId}")
+    public String deleteComment(@PathVariable("topicId") BigInteger topicId, @PathVariable("commentId") BigInteger commentId) {
+        commentService.deleteComment(commentId);
+
+        System.out.println("删除评论"+commentId);
+        return "redirect:/showComment/" + topicId;
+    }
 }

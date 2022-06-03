@@ -16,4 +16,8 @@ public interface CommentService {
     public String FilterSensiveWord(String content,BigInteger userID);
 
     public boolean checkCommentLength(String s);
+
+    public int deleteComment(BigInteger commentId);
+
+
 }

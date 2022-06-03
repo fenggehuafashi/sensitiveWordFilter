@@ -7,6 +7,7 @@
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 
     <style>
         .bd-placeholder-img {
@@ -39,14 +40,32 @@
 <!--评论展示主体-->
 <main class="container">
     <div th:each="comment,commentStat:${comments}" class="col-md-offset-2">
+        <!--单数-->
         <h4 class="font-monospace fw-bold" th:text="${comment.name}"></h4>
         <div th:if="${commentStat.odd}" class="col-md-12  bg-secondary text-white rounded-3 border border-2 ">
             <p class="px-2 py-2 lh-base fs-5 col-md-10 font-monospace" th:text="${comment.content}"></p>
-            <h6 class="px-2 py-2 lh-base font-monospace" th:text="${comment.date}"></h6>
+            <div class="col-md-12">
+                <h6 class="col-md-9 d-inline  px-2 py-2 lh-base font-monospace float-start" th:text="${comment.date}"></h6>
+                <a th:if="${comment.id}==${session.userId}"
+                   th:href="@{'/deleteComment/'+${comment.topic_id}+'/'+${comment.comment_id}}"
+                   type="button"  class=" btn btn-outline-light float-right d-inline"
+                   data-toggle="modal" data-target="#exampleModal">删 除</a>
+                <br>
+                <br>
+            </div>
         </div>
+
+        <!--双数-->
         <div th:if="${commentStat.even}" class="col-md-12 bg-light text-dark rounded-3 border border-2">
             <p class="px-2 py-2 lh-base fs-5 col-md-10 font-monospace" th:text="${comment.content}"></p>
-            <h6 class="px-2 py-2  lh-base font-monospace" th:text="${comment.date}"></h6>
+            <div class="col-md-12">
+                <h6 class="col-md-9 d-inline px-2 py-2 lh-base font-monospace float-start" th:text="${comment.date}"></h6>
+                <a th:if="${comment.id}==${session.userId}"
+                   th:href="@{'/deleteComment/'+${comment.topic_id}+'/'+${comment.comment_id}}"
+                   type="button" class=" btn btn-outline-secondary float-right d-inline">删 除</a>
+                <br>
+                <br>
+            </div>
         </div>
 
         <br>

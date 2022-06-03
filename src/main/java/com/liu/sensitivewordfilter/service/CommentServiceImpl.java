@@ -55,13 +55,19 @@ public class CommentServiceImpl implements CommentService {
         return judge;
     }
 
+    @Override
+    public int deleteComment(BigInteger commentId) {
+        return commentMapper.deleteComment(commentId);
+    }
+
     /**
      * 敏感词过滤业务代码
+     *
      * @param content
      * @return
      */
     @Override
-    public String FilterSensiveWord(String content,BigInteger userID) {
+    public String FilterSensiveWord(String content, BigInteger userID) {
         //调用DFA算法，对评论内容进行过滤，敏感词将被替换为'*'号
         content = TextUtils.filter(content);
         //敏感词和违规词的字符数记录
